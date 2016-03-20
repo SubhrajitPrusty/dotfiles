@@ -1,0 +1,130 @@
+#
+# bspwm hotkeys
+#
+
+super + alt + Escape
+	bspc quit
+
+super + w
+	bspc window -c
+
+super + t
+	bspc desktop -l next
+
+super + b
+	bspc desktop -B
+
+super + {s,f}
+	bspc window -t {floating,fullscreen}
+
+super + {grave,Tab}
+	bspc {window,desktop} -f last
+
+super + apostrophe
+	bspc window -s last
+
+super + {o,i}
+	bspc control --record-history off; \
+	bspc window {older,newer} -f; \
+	bspc control --record-history on
+
+super + y
+	bspc window -w last.manual
+
+super + m
+	bspc window -s biggest
+
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc window -{f,s} {left,down,up,right}
+
+super + {_,shift + }c
+	bspc window -f {next,prev}
+
+super + {comma,period}
+	bspc desktop -C {backward,forward}
+
+super + bracket{left,right}
+	bspc desktop -f {prev,next}
+
+super + ctrl + {Left,Down,Up,Right}
+	bspc window -p {left,down,up,right}
+
+super + ctrl + {_,shift + }space
+	bspc {window -p cancel,desktop -c}
+
+super + alt + {Left,Down,Up,Right}
+	bspc window -e {left -10,down +10,up -10,right +10}
+
+super + alt + shift + {Left,Down,Up,Right}
+	bspc window -e {right -10,up +10,down -10,left +10}
+
+super + ctrl + {1-9}
+	bspc window -r 0.{1-9}
+
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,window -d} ^{1-9,10};
+
+~button1
+	bspc pointer -g focus
+
+super + button{1-3}
+	bspc pointer -g {move,resize_side,resize_corner}
+
+super + !button{1-3}
+	bspc pointer -t %i %i
+
+super + @button{1-3}
+	bspc pointer -u
+
+super + {d}
+	dmenu_extended_run -fn "-*-cure-*-*-*-*-11-*-*-*-*-*-*-*"
+#
+# wm independent hotkeys
+#
+
+super + Return
+	xfce4-terminal --hide-menubar
+
+super + space
+	dmenu_run -b -i -p ">"
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+super + e
+	bspc desktop -E
+
+super + h
+	gksudo pm-hibernate
+
+F1
+	thunar
+
+super + F2
+	sublime
+
+super + F3
+	firefox
+
+ctrl + {Right,Left}
+	mocp -{f,r} ; sleep 2s ; notify-send 'Now Playing' "$(mocp -Q '%t - %a') \n\n$(mocp -Q "%file")" 
+
+super + F4
+	xfce4-terminal --hide-menubar -H -e mocp
+
+super + l
+	slock
+
+super + p
+	mocp -G ; sleep 2s ; notify-send "$(mocp -Q "%state")" "$(mocp -Q '%t - %a') \n\n$(mocp -Q "%file")"
+
+ctrl + F12
+	sleep 1 && xset dpms force off
+
+super + alt + F1
+	nautilus
+
+ctrl + shift + F12
+	bspc control --toggle-visibility
+
