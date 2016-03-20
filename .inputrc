@@ -1,0 +1,3 @@
+#inputrc
+# Make Tab autocomplete regardless of filename case
+set completion-ignore-case on
