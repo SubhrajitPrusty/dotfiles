@@ -1,0 +1,3 @@
+keycode 173 = XF86AudioPrev
+keycode 172 = XF86AudioPlay
+keycode 171 = XF86AudioNext

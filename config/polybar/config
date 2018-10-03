@@ -1,0 +1,300 @@
+[bar/white]
+
+;------------;
+; DIMENSIONS ;
+;------------;
+
+width = 100%
+height = 20
+offset-y = 0
+offset-x = 0
+
+;border-top-size = 10
+;border-bottom-size = 0
+;border-right-size = 10
+;border-left-size = 10
+
+;----------;
+; LOCATION ;
+;----------;
+
+bottom = false
+monitor = eDP-1
+wm-restack = i3 
+override-redirect = false
+
+;-------;
+; FONTS ;
+;-------;
+
+font-0 = monospace:size=8;3
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=12;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=12;3"
+
+;--------;
+; COLORS ;
+;--------;
+
+background = 0 
+foreground = #eeeeee
+border-color = 0
+
+;---------------;
+; MISCELLANEOUS ;
+;---------------;
+
+fixed-center = true
+padding-left = 2 
+padding-right = 2
+module-margin = 1.5
+
+modules-left = apps volume backlight battery music
+modules-center = i3
+modules-right = network ssid cpu date time
+
+tray-position = none
+tray-detached = true
+
+[bar/music]
+;------------;
+; DIMENSIONS ;
+;------------;
+
+width = 100%
+height = 20
+offset-y = 0
+offset-x = 0
+
+border-top-size = 10
+border-bottom-size = 0
+border-right-size = 10
+border-left-size = 10
+
+;----------;
+; LOCATION ;
+;----------;
+
+bottom = true
+monitor = eDP-1
+wm-restack = none
+override-redirect = false
+
+;-------;
+; FONTS ;
+;-------;
+
+font-0 = monospace:size=8;3
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=10;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;3"
+
+;--------;
+; COLORS ;
+;--------;
+
+background = 0
+foreground = #c5a9f9
+border-color = 0
+
+;---------------;
+; MISCELLANEOUS ;
+;---------------;
+
+fixed-center = true
+padding-left = 2 
+padding-right = 2
+module-margin = 1.5
+
+;modules-left = 
+modules-center = music
+;modules-right = 
+
+
+;---------;
+; MODULES ;
+;---------;
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+enable-scroll = false
+
+label-unfocused-foreground = #55ffffff
+label-focused-foreground = #ffffffff
+label-urgent-foreground = #ff0000
+
+[module/time]
+type = internal/date
+
+interval = 1.0
+
+date = %I:%M %p
+
+[module/date]
+type = internal/date
+date = %A - %e %B
+label = %date%
+
+[module/apps]
+type = custom/menu
+;expand-right = true
+
+menu-0-0 = Frequent
+menu-0-0-exec = menu-open-1
+menu-0-1 = Multimedia
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = Firefox
+menu-1-0-exec = firefox &
+menu-1-1 = Thunar
+menu-1-1-exec = thunar &
+
+menu-2-0 = Banshee
+menu-2-0-exec = banshee &
+menu-2-1 = mocp
+menu-2-1-exec = urxvt -e mocp &
+
+label-open = Apps
+label-close = x
+label-separator = " "
+
+
+
+[module/battery]
+type = custom/script
+exec = acpi -b | awk '{print $3,$4}' | sed -e s/[cC]harging/CH/g | sed -e s/,//g
+interval = 2
+format = ⚡ <label>
+# format = %{A1: echo $(notify-send "$(acpi -b | awk '{ print "Remaining " $5 }')") ⚡ <label> %{A}
+click-left = ~/Scripts/battery.sh
+
+[module/volume]
+type = internal/volume
+format-volume = ♪ <label-volume>
+format-muted = MUTE
+
+[module/music]
+type = custom/script
+exec = mocp -i | grep 'SongTitle:' | cut -d ':' -f 2
+interval = 2
+label = %output:0:30:...%
+format = ♬ <label>
+
+click-left = mocp -r
+click-middle = mocp -G
+click-right = mocp -f
+
+scroll-up = mocp -k 10
+scroll-down = mocp -k -10
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = ☼ <label>
+
+label = %percentage%%
+
+[module/cpu]
+type = internal/cpu
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+label =  %gb_used%
+
+[module/ipadd]
+type = custom/script
+exec = hostname -I | cut -d ' ' -f 1
+
+[module/ssid]
+type = custom/script
+exec = if [ "$(iwgetid)" = "" ]; then echo Ethernet; else echo $(iwgetid -r); fi
+click-middle = notify-send $(hostname -I | cut -d ' ' -f 1)
+
+[module/network]
+type = internal/network
+interface = wlo1 
+label-connected =  %downspeed% |  %upspeed%
+
+[module/temperature]
+type = internal/temperature
+interval = 5
+
+
+[bar/float]
+
+inherit = bar/white
+
+background = #90ffffff
+
+tray-position = center
+
+
+[bar/window]
+;------------;
+; DIMENSIONS ;
+;------------;
+
+width = 100%
+height = 20
+offset-y = 0
+offset-x = 0
+
+border-top-size = 10
+border-bottom-size = 0
+border-right-size = 10
+border-left-size = 10
+
+;----------;
+; LOCATION ;
+;----------;
+
+bottom = true
+monitor = eDP-1
+wm-restack = none
+override-redirect = false
+
+;-------;
+; FONTS ;
+;-------;
+
+font-0 = monospace:size=10;3
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=10;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;3"
+
+;--------;
+; COLORS ;
+;--------;
+
+background = 0
+foreground = #eeeeee
+border-color = 0
+
+;---------------;
+; MISCELLANEOUS ;
+;---------------;
+
+fixed-center = true
+padding-left = 2 
+padding-right = 2
+module-margin = 1.5
+
+;modules-left = 
+modules-center = windows
+;modules-right = 
+
+tray-position = right
+tray-detatched = false
+
+[module/windows]
+type = internal/xwindow
+
+format = <label>

@@ -1,0 +1,60 @@
+!--------------!
+! URXVT CONFIG !
+!--------------!
+
+URxvt.internalBorder:	30
+URxvt.scrollBar:	false
+URxvt.letterSpace:	-1
+URxvt.cursorColor:	#191919
+URxvt.font: xft:monospace:size=10, xft:Font Awesome 5 Free Solid:size=10
+!! Larger history limit
+urxvt.saveLines: 1000000
+
+!! Perl extensions
+urxvt.perl-ext-common: default,matcher,font-size,clipboard
+!! Open urls in browser with Control-Click
+urxvt.urlLauncher: /usr/bin/firefox
+urxvt.matcher.button: C1
+!! Change font size on Control-Plus/Minus
+URxvt.keysym.Control-0x2b: perl:font-size:increase
+URxvt.keysym.Control-0x2d: perl:font-size:decrease
+URxvt.copyCommand: xclip -i -selection primary 
+URxvt.pasteCommand: xclip -o -selection primary 
+URxvt.keysym.m-c: perl:clipboard:copy
+URxvt.keysym.m-v: perl:clipboard:paste
+URxvt.keysym.Control-c: perl:clipboard:copy
+URxvt.keysym.Control-v: perl:clipboard:paste
+
+! ------------------------------------------------------------------------------
+! theme colors
+! ------------------------------------------------------------------------------
+! special
+! special
+*.foreground:  #eeeeee
+*.background:  #2c2c2c
+*.cursorColor:  #d3d0c8
+
+!black
+color0  : #252525
+color8  : #252525
+!red
+color1  : #f8f8f8
+color9  : #f8f8f8
+!green
+color2  : #0084FF
+color10 : #0084FF
+!yellow
+color3  : #f7f7f7
+color11 : #f7f7f7
+!blue
+color4  : #606060
+color12 : #606060
+!magenta
+color5  : #0084FF
+color13 : #0084FF
+!cyan
+color6  : #e2e2e2
+color14 : #e2e2e2
+!white
+color7  : #ffffff
+color15 : #ffffff
