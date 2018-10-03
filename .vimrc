@@ -15,7 +15,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+Plugin 'kristijanhusak/vim-carbon-now-sh'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -91,3 +91,8 @@ endif
 
 set tabstop=4
 set shiftwidth=4
+set laststatus=2
+
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
