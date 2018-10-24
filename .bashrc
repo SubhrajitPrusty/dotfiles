@@ -117,7 +117,7 @@ alias hibernate="sudo pm-hibernate"
 alias links="links2"
 alias reboot="sudo reboot"
 alias synaptic="sudo synaptic"
-alias wifiup="wifiup.py"
+alias cv="xclip -selection clipboard -o"
 
 # added by Anaconda2 installer
 export PATH="/home/subhrajit/anaconda2/bin:$PATH"
@@ -129,12 +129,30 @@ alias cdx="cd /media/subhrajit/Windows/Users/Subhrajit/Documents/CDX/"
 export PATH="/media/subhrajit/Apps/dev/flutter/bin:$PATH"
 
 # jdk path
-export JAVA_HOME="/opt/jdk-10.0.2/"
-export PATH="/opt/jdk-10.0.2/bin:$PATH"
+
+# export JAVA_HOME="/usr/bin"
+# export PATH="$PATH"
+
+export JAVA_HOME="/opt/jdk1.8.0_181/"
+export PATH="$JAVA_HOME/bin:$PATH"
 
 # android studio path
 export PATH="/media/subhrajit/Apps/dev/android-studio/bin:$PATH"
 
 # ANDROID_HOME
+
+export ANDROIDSDK="/media/subhrajit/Apps/dev/android-sdk"
+export ANDROIDNDK="/media/subhrajit/Apps/dev/android-ndk"
+export ANDROIDNDKVER="r18"
 export ANDROID_HOME="/media/subhrajit/Apps/dev/android-sdk"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# powerline config
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+. /usr/share/powerline/bindings/bash/powerline.sh
+
+# scripts path
+
+export PATH=$PATH:$HOME/Scripts/
