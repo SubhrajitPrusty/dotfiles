@@ -11,17 +11,18 @@ URxvt.font: xft:DejaVuSansMono for Powerline:size=10, xft:monospace:size=10
 urxvt.saveLines: 1000000
 
 !! Perl extensions
-urxvt.perl-ext-common: default,matcher,font-size,clipboard
+urxvt.perl-ext-common: default,matcher,font-size,selection-to-clipboard
 !! Open urls in browser with Control-Click
 urxvt.urlLauncher: /usr/bin/firefox
 urxvt.matcher.button: C1
 !! Change font size on Control-Plus/Minus
 URxvt.keysym.Control-0x2b: perl:font-size:increase
 URxvt.keysym.Control-0x2d: perl:font-size:decrease
+
 URxvt.copyCommand: xclip -i -selection clipboard 
 URxvt.pasteCommand: xclip -o -selection clipboard
-URxvt.keysym.m-c: perl:clipboard:copy
-URxvt.keysym.m-v: perl:clipboard:paste
+URxvt.keysym.Control-Alt-C: perl:Clipboard:copy 
+URxvt.keysym.Control-Alt-V: perl:Clipboard:paste
 
 ! ------------------------------------------------------------------------------
 ! theme colors
