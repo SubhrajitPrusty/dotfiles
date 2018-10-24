@@ -130,11 +130,45 @@ alias rm="rm -v"
 alias nethogs="sudo nethogs"
 alias killall="killall -v"
 alias hibernate="sudo pm-hibernate"
-
-alias vnstat="vnstat -ru"
+alias links="links2"
 alias reboot="sudo reboot"
-alias fb="links m.facebook.com"
-alias ortel="links cm.ortel.net"
-alias neton="nmcli c up id Ethernet"
-alias netoff="nmcli c down id Ethernet"
+alias synaptic="sudo synaptic"
+alias cv="xclip -selection clipboard -o"
 
+# added by Anaconda2 installer
+export PATH="/home/subhrajit/anaconda2/bin:$PATH"
+
+# copy to work folder
+alias cdx="cd /media/subhrajit/Windows/Users/Subhrajit/Documents/CDX/"
+
+# flutter path
+export PATH="/media/subhrajit/Apps/dev/flutter/bin:$PATH"
+
+# jdk path
+
+# export JAVA_HOME="/usr/bin"
+# export PATH="$PATH"
+
+export JAVA_HOME="/opt/jdk1.8.0_181/"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# android studio path
+export PATH="/media/subhrajit/Apps/dev/android-studio/bin:$PATH"
+
+# ANDROID_HOME
+
+export ANDROIDSDK="/media/subhrajit/Apps/dev/android-sdk"
+export ANDROIDNDK="/media/subhrajit/Apps/dev/android-ndk"
+export ANDROIDNDKVER="r18"
+export ANDROID_HOME="/media/subhrajit/Apps/dev/android-sdk"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# powerline config
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+. /usr/share/powerline/bindings/bash/powerline.sh
+
+# scripts path
+
+export PATH=$PATH:$HOME/Scripts/

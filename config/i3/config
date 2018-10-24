@@ -171,9 +171,9 @@ bindsym $mod+F2 exec subl
 bindsym $mod+F3 exec firefox
 
 # media keys
-bindsym XF86AudioPlay exec `mocp -G` # || banshee --toggle-playing`
-bindsym XF86AudioPrev exec `mocp -r` # || banshee --previous`
-bindsym XF86AudioNext exec `mocp -f` # || banshee --next`
+bindsym XF86AudioPlay exec /home/subhrajit/Scripts/sp-playtoggle.sh || mocp -G || banshee --toggle-playing
+bindsym XF86AudioPrev exec /home/subhrajit/Scripts/sp-prev.sh || mocp -r || banshee --previous
+bindsym XF86AudioNext exec /home/subhrajit/Scripts/sp-next.sh || mocp -f || banshee --next
 
 # volume keys
 bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+
@@ -239,3 +239,6 @@ for_window [class="feh"] move absolute position center
 for_window [instance="floating"] floating enable
 
 
+# test
+
+bindsym $mod+g exec /home/subhrajit/Scripts/sp-next.sh
