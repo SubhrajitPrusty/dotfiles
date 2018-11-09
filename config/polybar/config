@@ -21,16 +21,13 @@ offset-x = 0
 bottom = false
 monitor = eDP-1
 wm-restack = i3 
-override-redirect = false
+override-redirect = true 
 
 ;-------;
 ; FONTS ;
 ;-------;
 
 font-0 = monospace:size=8;3
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=12;3"
-font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=12;3"
-font-3 = "Font Awesome 5 Brands:pixelsize=12;3"
 
 ;--------;
 ; COLORS ;
@@ -52,9 +49,6 @@ module-margin = 1.5
 modules-left = apps volume backlight battery music
 modules-center = i3
 modules-right = network ssid cpu date time
-
-tray-position = none
-tray-detached = true
 
 [bar/music]
 ;------------;
@@ -151,15 +145,19 @@ menu-1-0 = Firefox
 menu-1-0-exec = firefox &
 menu-1-1 = Thunar
 menu-1-1-exec = thunar &
+menu-1-2 = Telegram
+menu-1-2-exec = Telegram &
 
-menu-2-0 = Banshee
-menu-2-0-exec = banshee &
+menu-2-0 = Spotify 
+menu-2-0-exec = spotify &
 menu-2-1 = mocp
 menu-2-1-exec = urxvt -e mocp &
+menu-2-2 = Banshee
+menu-2-2-exec = banshee &
 
 label-open = Apps
 label-close = x
-label-separator = " "
+label-separator = " | "
 
 
 
@@ -178,7 +176,8 @@ format-muted = MUTE
 
 [module/music]
 type = custom/script
-exec = mocp -i | grep 'SongTitle:' | cut -d ':' -f 2
+exec = dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' | cut -d '"' -f 2
+# exec = mocp -i | grep 'SongTitle:' | cut -d ':' -f 2
 interval = 2
 label = %output:0:30:...%
 format = ♬ <label>
@@ -221,7 +220,7 @@ click-middle = notify-send $(hostname -I | cut -d ' ' -f 1)
 [module/network]
 type = internal/network
 interface = wlo1 
-label-connected =  %downspeed% |  %upspeed%
+label-connected = %downspeed% | %upspeed%
 
 [module/temperature]
 type = internal/temperature
@@ -292,7 +291,7 @@ modules-center = windows
 ;modules-right = 
 
 tray-position = right
-tray-detatched = false
+tray-detatched = false 
 
 [module/windows]
 type = internal/xwindow

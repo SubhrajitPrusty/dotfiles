@@ -2,6 +2,7 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
+" VUNDLE STARTS
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -14,8 +15,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'kristijanhusak/vim-carbon-now-sh'
+Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -30,8 +30,10 @@ filetype plugin indent on    " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line"
-"
+" Put your non-Plugin stuff after this line
+
+" Vundle ENDS
+
 "  All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
 " the call to :runtime you can find below.  If you wish to change any of those
 " settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
@@ -96,3 +98,4 @@ set laststatus=2
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
+
