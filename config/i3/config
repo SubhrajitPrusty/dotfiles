@@ -151,14 +151,16 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 
 # bar {
-# 	i3bar_command i3bar -t
-#	status_command i3blocks
-#	height 18
+#	status_command /usr/share/powerline/bindings/i3/powerline-i3.py
+#	font pango:PowerlineFont 12
 # }
 
 # gaps
 gaps inner 15
 gaps outer 10
+gaps top 15
+gaps bottom 10
+
 for_window [class="^.*"] border pixel 2
 
 # smart_gaps on
