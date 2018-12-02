@@ -57,12 +57,7 @@ ddg () {
 ## Terminal
 alias quit="exit"
 alias c="clear"
-
-# Alias to avoid some "PERKELE!!!"
-alias :q="quit"
-alias cd..="cd .."
 alias df="df -h"
-alias perkele="quit"
 
 # Make some output colorful
 alias ls="ls --color=auto"
@@ -74,9 +69,6 @@ alias ccal=" cal | grep -A7 -B7 --color=auto $(date +%d)"
 # job control
 alias mtop="ps --no-header -eo pmem,size,vsize,comm | sort -nr | sed 10q"
 alias ctop="ps --no-header -eo pcpu,comm | sort -nr | sed 10q"
-
-## stupid shit
-alias fman="man --html=firefox"
 
 ## }}}
 
@@ -103,21 +95,14 @@ export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history:c'
 
 #basic shit
 
-#export PATH=/usr/share/local/bin:$PATH
-export PATH=/home/subhrajit/scripts:$PATH
-#export PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
-#export PS1="${fd}> ${nofg}"
-#eval $(ssh-agent)
-#ssh-add
-
-export PS1="\u:\w: "
+#export PS1="\u:\w: "
 
 ## }}}
 
 # aliases
 
-alias sap="sudo apt-get"
-alias pipes="pipes.sh -p 5 -t 3"
+alias sap="sudo apt"
+alias pipes="pipes.sh"
 alias htop="htop -d 3"
 alias shutdown="sudo shutdown -P"
 alias matrix="cmatrix -b -u 3 -C blue"
@@ -126,7 +111,6 @@ alias fortune="fortune -a"
 alias sapi="sudo apt install"
 alias sapp="aptitude search"
 alias scrot="scrot -d 2"
-alias rm="rm -v"
 alias nethogs="sudo nethogs"
 alias killall="killall -v"
 alias hibernate="sudo pm-hibernate"
@@ -164,12 +148,29 @@ export ANDROIDNDKVER="r18"
 export ANDROID_HOME="/media/subhrajit/Apps/dev/android-sdk"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 
+# LANG to utf8
+
+export LANG=en_IN.utf8
+
+# scripts path
+
+export PATH=$PATH:$HOME/Scripts/
+
+export PATH=$PATH:/opt/Telegram
+
+
 # powerline config
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . /usr/share/powerline/bindings/bash/powerline.sh
 
-# scripts path
+# powerline shell stuff
 
-export PATH=$PATH:$HOME/Scripts/
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
