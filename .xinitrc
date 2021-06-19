@@ -1,2 +1,4 @@
-sxhkd &
-exec bspwm
+xrdb ~/.Xresources
+wal -R
+xset s off
+xset -dpms
