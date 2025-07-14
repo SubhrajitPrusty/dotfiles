@@ -1,0 +1,32 @@
+#!/bin/bash
+keyword="$1"
+
+if [ -z "$keyword" ]; then
+  echo "Usage: $0 <keyword>"
+  exit 1
+fi
+
+echo "Searching stashes for keyword: $keyword"
+echo "----------------------------------------"
+
+git stash list | while read stash; do
+  stash_name=$(echo $stash | cut -d: -f1)
+  stash_desc=$(echo $stash | cut -d: -f2-)
+
+  if git stash show -p $stash_name | grep -q "$keyword"; then
+    echo "✓ $stash_name$stash_desc"
+    echo "  Files containing '$keyword':"
+
+    # Get list of modified files in this stash
+    files=$(git stash show $stash_name | awk '{print $1}')
+
+    # For each file, check if it contains the keyword
+    for file in $files; do
+      if git stash show -p $stash_name -- "$file" | grep -q "$keyword"; then
+        echo "    - $file:"
+        git stash show -p $stash_name -- "$file" | grep --color=always "$keyword" | sed 's/^/      /'
+      fi
+    done
+    echo ""
+  fi
+done

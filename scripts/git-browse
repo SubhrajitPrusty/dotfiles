@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+filename="${1}"
+line1="${2}"
+line2="${3}"
+
+branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+remote=$(git config branch."${branch}".remote || echo "origin")
+giturl="$(git remote get-url "${remote}")"
+
+# base url
+url="${giturl%.git}"
+
+# craft gitlab URLs
+if [[ "${giturl}" =~ gitlab ]]; then
+    if [[ -n "${filename}" ]]; then
+        commit_hash="$(git log -n1 --format=format:"%H" "${filename}" 2>/dev/null)"
+        url="${url}/-/blob/${commit_hash:-${branch}}/${filename}"
+        if [[ -n "${line1}" ]]; then
+            url="${url}#L${line1}"
+            if [[ -n "${line2}" ]]; then
+                url="${url}-${line2}"
+            fi
+        fi
+    fi
+
+# craft github URLs
+elif [[ "${giturl}" =~ github ]]; then
+    if [[ -n "${filename}" ]]; then
+        commit_hash="$(git log -n1 --format=format:"%H" "${filename}" 2>/dev/null)"
+        url="${giturl%.*}/blob/${commit_hash:-${branch}}/${filename}"
+        if [[ -n "${line1}" ]]; then
+            url="${url}#L${line1}"
+            if [[ -n "${line2}" ]]; then
+                url="${url}-L${line2}"
+            fi
+        fi
+    fi
+fi
+
+
+lines=${url//\n/ }
+nlines=${#lines[@]}
+
+if [[ $nlines -gt 1 ]]; then
+    url=${url[0]}
+else
+    url=${url}
+fi
+
+if [[ "${url}" =~ "git@" ]]; then
+    final_url="${url/git\@/https\://}"
+    final_url="${final_url/.com:/.com\/}"
+else
+    final_url=${url}
+fi
+
+# hash open 2>/dev/null && open "${final_url}"
+hash xdg-open 2>/dev/null && xdg-open "${final_url}"
