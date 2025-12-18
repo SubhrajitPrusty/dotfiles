@@ -175,7 +175,11 @@ gaps bottom 10
 
 for_window [class="^.*"] border pixel 2
 
-# smart_gaps on
+smart_gaps on
+
+# On workspace 3, disable gaps
+workspace 3 gaps inner 0
+workspace 3 gaps outer 0
 
 # smart_borders on
 
@@ -183,33 +187,65 @@ for_window [class="^.*"] border pixel 2
 bindsym $mod+F1 exec thunar
 bindsym $mod+F2 exec subl
 bindsym $mod+F3 exec firefox
+# bindsym $mod+F3 exec google-chrome
+# bindsym $mod+F3 exec brave
 
-# media keys
-bindsym XF86AudioPlay exec /home/subhrajit/Scripts/sp-playtoggle.sh || mocp -G || banshee --toggle-playing
-bindsym XF86AudioPrev exec /home/subhrajit/Scripts/sp-prev.sh || mocp -r || banshee --previous
-bindsym XF86AudioNext exec /home/subhrajit/Scripts/sp-next.sh || mocp -f || banshee --next
+assign [class="Firefox"] 3
+assign [class="firefox"] 3
+assign [class="brave"] 3
+assign [class="Brave"] 3
+assign [class="Slack"] 2
+assign [class="spotify"] 4
+assign [class="discord"] 4
 
 # volume keys
-bindsym F3 exec amixer -D pulse sset Master 5%+
-bindsym F2 exec amixer -D pulse sset Master 5%-
-bindsym F1 exec amixer -D pulse sset Master toggle
+# bindsym F3 exec amixer -D pulse sset Master 5%+
+# bindsym F2 exec amixer -D pulse sset Master 5%-
+# bindsym F1 exec amixer -D pulse sset Master toggle
 
-#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
-#bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%-
+bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
 
 # brightness keys
-bindsym F4 exec light -U 10
-bindsym F5 exec light -A 10
+# bindsym F4 exec light -U 10
+# bindsym F5 exec light -A 10
 
 # screenshot
-bindsym Print exec scrot -e 'mv $f ~/Pictures/Scrot/'
+mode "screenshot" {
+    bindsym p exec scrot -e 'mv $f ~/Pictures/scrot/'
 
-# urxvt
-bindsym $mod+Return exec --no-startup-id urxvt
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+bindsym $mod+p mode "screenshot"
+
+# flameshot
+bindsym $mod+shift+s exec flameshot gui
+
+# terminal
+# bindsym $mod+Return exec --no-startup-id urxvt
+bindsym $mod+Return exec --no-startup-id kitty
 #bindsym $mod+Tab exec --no-startup-id urxvt -name floating
 
-# lock i3
-bindsym $mod+t exec slock 
+
+## spotify mode configs
+
+mode "spotify" {
+    bindsym Right exec playerctl next
+    bindsym Left exec playerctl previous
+    bindsym p exec playerctl play-pause
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+bindsym $mod+o mode "spotify"
+
+# move current workspace to next display/output
+bindsym $mod+x move workspace to output next
+
 
 
 ##############
@@ -223,17 +259,17 @@ exec xfce4-power-manager
 exec --no-startup-id diodon
 exec $HOME/.fehbg
 exec syndaemon -i 2.0 -t -d
-exec_always --no-startup-id cd /media/subhrajit/OS/Users/subhrajit/code/config/startpage/ && python3 -m http.server 1234
-exec_always wal -R
+exec_always --no-startup-id cd /media/subhrajit/OS/Users/subhrajit/code/repos/startpage/ && python3 -m http.server 1234
+# exec_always wal -R
 exec_always xrdb ~/.Xresources
-exec xset s off
-exec xset -dpms
+# exec --no-startup-id slack
+# exec --no-startup-id firefox
 
 ###########
 # POLYBAR #
 ###########
 
-exec_always --no-startup-id bash ~/.config/polybar/launch.sh --shapes
+exec_always --no-startup-id bash ~/.config/polybar/launch.sh --panels
 
 ################
 # SPECIAL CASE #
@@ -247,6 +283,7 @@ exec_always --no-startup-id bash ~/.config/polybar/launch.sh --shapes
 # firefox
 # for_window [class="Firefox"] floating enable 
 for_window [class="Firefox"] move absolute position center
+for_window [class="Google-chrome"] move absolute position center
 
 # feh
 for_window [class="feh"] floating enable
@@ -257,3 +294,13 @@ for_window [instance="floating"] floating enable
 
 # kill all containers in a workspace
 bindsym $mod+Control+Shift+k focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
+
+
+# Bind workspace to Display
+# workspace 5 output HDMI-1
+# workspace 6 output HDMI-1
+# workspace 7 output HDMI-1
+# workspace 8 output HDMI-1
+# workspace 9 output HDMI-1
+# workspace 0 output HDMI-1
+
