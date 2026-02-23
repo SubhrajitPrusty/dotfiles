@@ -1,4 +1,5 @@
 require("keymaps").setup()
+require("autocmd").setup()
 
 -- Mason
 require("mason").setup()
@@ -86,8 +87,8 @@ require("supermaven-nvim").setup({
 
 -- NeoGit
 require("neogit").setup({
-	-- kind = "floating"
-	kind = "replace",
+	kind = "floating"
+	-- kind = "replace",
 })
 
 require("dashboard").setup({

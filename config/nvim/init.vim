@@ -1,8 +1,3 @@
-" Python setup for nvim
-" let g:python3_host_prog = '/usr/bin/python3'
-" let g:python3_host_prog = '/home/subhrajit/.pyenv/versions/3.10.6/bin/python3'
-
-
 " Plugins
 
 call plug#begin('~/.vim/plugged')
@@ -22,7 +17,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'mason-org/mason.nvim'
 Plug 'mason-org/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-
 
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -79,19 +73,10 @@ Plug 'epwalsh/obsidian.nvim'
 " Conflicting
 " Plug 'ray-x/navigator.lua'       " LSP + navigation
 
-
 call plug#end()
 
 " Lua
 lua require('init')
-
-
-" Autocmd golang
-autocmd BufWritePre *.go lua vim.lsp.buf.format()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Copied from http://nerditya.com/code/guide-to-neovim/ "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Map the leader key to SPACE
 let mapleader="\\"
@@ -102,7 +87,6 @@ set formatoptions+=o    " Continue comment marker in new lines.
 set expandtab           " Insert spaces when TAB is pressed.
 set tabstop=4           " Render TABs using this many spaces.
 set shiftwidth=4        " Indentation amount for < and > commands.
-
 set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
 
 " More natural splits
@@ -112,12 +96,14 @@ set splitright          " Vertical split to right of current.
 if !&scrolloff
     set scrolloff=3       " Show next 3 lines while scrolling.
 endif
+
 if !&sidescrolloff
     set sidescrolloff=5   " Show next 5 columns while side-scrolling.
 endif
+
 set nostartofline       " Do not jump to first character with page commands.
 
-" conceallevel
+" conceallevel | required by obsidian
 set conceallevel=1
 
 " Tell Vim which characters to show for expanded TABs,
@@ -125,6 +111,7 @@ set conceallevel=1
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
+
 " set list                " Show problematic characters.
 
 " Also highlight all tabs and trailing whitespace characters.
@@ -135,43 +122,11 @@ set ignorecase          " Make searching case insensitive
 set smartcase           " ... unless the query has capital letters.
 set gdefault            " Use 'g' flag by default with :s/foo/bar/.
 
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-endif
-
 if has("unnamedplus")
     set clipboard+=unnamedplus
 else
     set clipboard+=unnamed
 endif
-
-" Search and Replace
-nmap <Leader>s :%s//g<Left><Left>
-
-" Relative numbering
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set nornu
-    set number
-  else
-    set rnu
-  endif
-endfunc
-
-" Toggle between normal and relative numbering.
-nnoremap <leader>r :call NumberToggle()<cr>
-
-" Use ; for commands.
-nnoremap ; :
-" Use Q to execute default register.
-nnoremap Q @q
-
-"""""""""""""""""""""
-" End of copy       "
-"""""""""""""""""""""
-
-" From old vimrc
 
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
@@ -181,13 +136,7 @@ endif
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-" set background=dark
-
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-" if has("autocmd")
-"   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" endif
+set background=dark
 
 " Uncomment the following to have Vim load indentation rules and plugins
 " according to the detected filetype.
@@ -197,7 +146,7 @@ endif
 
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
-set showcmd  " Show (partial) command in status line.
+" set showcmd  " Show (partial) command in status line.
 " set incsearch  " Incremental search
 set autowrite  " Automatically save before commands like :next and :make
 set hidden  " Hide buffers when they are abandoned
@@ -208,11 +157,8 @@ set splitbelow
 set splitright
 
 " Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" " Enable folding with the spacebar
-" nnoremap <space> za
+" set foldmethod=indent
+" set foldlevel=99
 
 " Mouse
 " set mouse=a  " Enable mouse usage (all modes)
@@ -258,56 +204,8 @@ let g:airline#extensions#tagbar#flags = 'f'
 " Themes
 colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 
-" Fugitive / Git
-" Git blame current line / file
-nnoremap <leader>gb :Git blame<cr>
-nnoremap <leader>gcp :term git commit -p<cr>i
-
-" NeoGit
-nnoremap <leader>gg :Neogit<cr>
-
-" NerdTree
-" Toggle file browser
-nnoremap <leader>n :NERDTreeToggle %<cr>
-" nnoremap <leader>n <cmd>lua NERDTreeToggleInCurDir()<cr>
-
-" Buffers
-" Close current buffer
-nnoremap <M-d> :bdelete!<cr>
-
-
 " autosave buffers
 set autowriteall
-autocmd BufLeave,FocusLost * wall
-" when you enter a buffer, make the current dir the working dir
-" this is not good, since it telescope's working dir also changes
-" autocmd BufEnter * lcd %:p:h
-
-
-" YouCompleteMe
-" set completeopt=menuone
-
-" File History
-nnoremap <C-H> :History<cr>
-
-" Uses $HOME/bin/git-browse command
-" Will xdg-open the url
-" command! -range Gbrowse execute 'silent ! git browse ' . expand('%') . ' ' . <line1> . ' ' . <line2> | checktime | redraw!
-
-" command! -range Gbrowse execute 'silent ! git browse ' . system('git ls-files --full-name ' . shellescape(expand('%'))) . ' ' . <line1> . ' ' . <line2> | checktime | redraw!
-
-cnoreabbrev ca 'lua vim.lsp.buf.code_action()'
-
-""" vimspector / debugging
-" let g:vimspector_install_gadgets = [ 'debugpy', 'delve' ]
-"
-" let g:vimspector_enable_mappings = 'HUMAN'
-" " mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
-"
-" " for normal mode - the word under the cursor
-" nmap <Leader>di <Plug>VimspectorBalloonEval
-" " for visual mode, the visually selected text
-" xmap <Leader>di <Plug>VimspectorBalloonEval
 
 """ MarkdownPreview
 " set to 1, nvim will open the preview window after entering the Markdown buffer

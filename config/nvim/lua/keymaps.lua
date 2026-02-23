@@ -74,7 +74,6 @@ function M.setup()
 		telescope_builtin.lsp_type_definitions,
 		vim.tbl_extend("force", opts, { desc = "Telescope: LSP Type Definitions" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<space>ds",
@@ -93,7 +92,6 @@ function M.setup()
 		telescope_builtin.diagnostics,
 		vim.tbl_extend("force", opts, { desc = "Telescope: Diagnostics" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<leader>fr",
@@ -136,7 +134,6 @@ function M.setup()
 		telescope_builtin.resume,
 		vim.tbl_extend("force", opts, { desc = "Telescope: Resume" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<leader>gs",
@@ -161,7 +158,6 @@ function M.setup()
 		telescope_builtin.git_bcommits,
 		vim.tbl_extend("force", opts, { desc = "Telescope: Git Buffer Commits" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<leader>fq",
@@ -174,14 +170,12 @@ function M.setup()
 		telescope_builtin.loclist,
 		vim.tbl_extend("force", opts, { desc = "Telescope: Location List" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<leader>fw",
 		telescope_builtin.grep_string,
 		vim.tbl_extend("force", opts, { desc = "Telescope: Grep String" })
 	)
-
 	vim.keymap.set(
 		"n",
 		"<C-k>",
@@ -216,22 +210,9 @@ function M.setup()
 	)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "LSP: Code action" }))
 
-	-- old traditional binds, replaced by telescope
-
-	-- vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
-	-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-	-- vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-	-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-	-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-
 	vim.keymap.set("n", "<space>ff", function()
 		vim.lsp.buf.format({ async = true })
-	end, opts)
-	vim.keymap.set("n", "<space>wl", function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, opts)
+	end, vim.tbl_extend("force", opts, { desc = "LSP: Format" }))
 
 	-- add obsidian shortcuts
 	vim.keymap.set("n", "<leader>ot", ":ObsidianToday<CR>")
@@ -306,6 +287,65 @@ function M.setup()
 			dapui.close()
 		end
 	end
+
+	-- misc
+	vim.keymap.set(
+		"n",
+		"<C-L>",
+		":nohlsearch<CR><C-L>",
+		vim.tbl_extend("force", opts, { desc = "Clear search highlight" })
+	)
+
+	--  Search and Replace
+	vim.keymap.set(
+		"n",
+		"<Leader>s",
+		":%s//g<Left><Left>",
+		vim.tbl_extend("force", opts, { desc = "Search and replace" })
+	)
+
+	-- Relative numbering
+	vim.keymap.set("n", "<leader>rn", function()
+		if vim.wo.relativenumber then
+			vim.wo.relativenumber = false
+		else
+			vim.wo.relativenumber = true
+		end
+	end, vim.tbl_extend("force", opts, { desc = "Toggle relative numbering" }))
+
+	-- File History
+	vim.keymap.set("n", "<C-H>", ":History<cr>", vim.tbl_extend("force", opts, { desc = "File History" }))
+
+	-- code action
+	vim.keymap.set(
+		"n",
+		"ca",
+		"<cmd>lua vim.lsp.buf.code_action()<CR>",
+		vim.tbl_extend("force", opts, { desc = "Code Action" })
+	)
+
+	-- Git
+	vim.keymap.set("n", "<leader>gb", ":Git blame<cr>", vim.tbl_extend("force", opts, { desc = "Git Blame" }))
+	vim.keymap.set(
+		"n",
+		"<leader>gcp",
+		":term git commit -p<cr>i",
+		vim.tbl_extend("force", opts, { desc = "Git Commit -p" })
+	)
+	vim.keymap.set("n", "<leader>gg", ":Neogit<cr>", vim.tbl_extend("force", opts, { desc = "Neogit" }))
+	vim.keymap.set("n", "<leader>n", ":NERDTreeToggle %<cr>", vim.tbl_extend("force", opts, { desc = "NERDTree" }))
+
+	-- Buffers
+	vim.keymap.set("n", "<M-d>", ":bdelete!<cr>", vim.tbl_extend("force", opts, { desc = "Buffers" }))
+
+	-- old traditional binds, replaced by telescope
+	-- vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+	-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+	-- vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+	-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+	-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 end
 
 return M
