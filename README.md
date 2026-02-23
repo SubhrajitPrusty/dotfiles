@@ -3,44 +3,26 @@
 
 # System
 
+```ansi
 
-                         ./o.
-                       ./sssso-
-                     `:osssssss+-
-                   `:+sssssssssso/.
-                 `-/ossssssssssssso/.
-               `-/+sssssssssssssssso+:`
-             `-:/+sssssssssssssssssso+/.
-           `.://osssssssssssssssssssso++-
-          .://+ssssssssssssssssssssssso++:
-        .:///ossssssssssssssssssssssssso++:
-      `:////ssssssssssssssssssssssssssso+++.
-    `-////+ssssssssssssssssssssssssssso++++-
-     `..-+oosssssssssssssssssssssssso+++++/`
-       ./++++++++++++++++++++++++++++++/:.
-      `:::::::::::::::::::::::::------``
-
-    subhrajit@zenbook
-    -----------------
-    OS: EndeavourOS x86_64
-    Host: ASUS Zenbook 14 UX3405MA_UX3405MA (1.0)
-    Kernel: Linux 6.14.6-arch1-1
-    Uptime: 31 days, 1 hour, 19 mins
-    Packages: 1034 (pacman)
-    Shell: bash 5.2.37
-    Display (SDC419D): 2880x1800 @ 60 Hz in 14" [Built-in]
-    WM: i3 (X11)
-    Theme: Arc-Darker [GTK2/3], Arc-Dark [GTK4]
-    Icons: Qogir-dark [GTK2/3]
-    Font: Adwaita Sans (11pt) [GTK2], Noto Sans (14pt) [GTK3]
-    Cursor: Qogir-dark (24px)
-    Terminal: kitty 0.42.0
-    Terminal Font: Hack-Regular (16pt)
-    CPU: Intel(R) Core(TM) Ultra 7 155H (22) @ 4.80 GHz
-    GPU: Intel Arc Graphics @ 2.25 GHz [Integrated]
-    Memory: 8.42 GiB / 14.98 GiB (56%)
-    Swap: Disabled
-    Disk (/): 130.68 GiB / 874.60 GiB (15%) - ext4
-    Local IP (wlan0): 192.168.1.105/23
-    Battery (ASUS Battery): 73% [Discharging]
-    Locale: en_IN.utf8
+                    'c.          subhrajit@macbook.local 
+                 ,xNMM.          ----------------------- 
+               .OMMMMo           OS: macOS 26.3 25D125 arm64 
+               OMMM0,            Host: Mac16,13 
+     .;loddo:' loolloddol;.      Kernel: 25.3.0 
+   cKMMMMMMMMMMNWMMMMMMMMMM0:    Uptime: 5 days, 23 hours, 13 mins 
+ .KMMMMMMMMMMMMMMMMMMMMMMMWd.    Packages: 175 (brew) 
+ XMMMMMMMMMMMMMMMMMMMMMMMX.      Shell: zsh 5.9 
+;MMMMMMMMMMMMMMMMMMMMMMMM:       Resolution: 1710x1107 
+:MMMMMMMMMMMMMMMMMMMMMMMM:       DE: Aqua 
+.MMMMMMMMMMMMMMMMMMMMMMMMX.      WM: Quartz Compositor 
+ kMMMMMMMMMMMMMMMMMMMMMMMMWd.    WM Theme: Blue (Dark) 
+ .XMMMMMMMMMMMMMMMMMMMMMMMMMMk   Terminal: /dev/ttys001 
+  .XMMMMMMMMMMMMMMMMMMMMMMMMK.   CPU: Apple M4 
+    kMMMMMMMMMMMMMMMMMMMMMMd     GPU: Apple M4 
+     ;KMMMMMMMWXXWMMMMMMMk.      Memory: 3109MiB / 16384MiB 
+       .cooc,.    .,coo:.
+                                                         
+                                                         
+                                                         
+```
