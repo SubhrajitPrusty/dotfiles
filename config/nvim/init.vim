@@ -258,14 +258,6 @@ let g:airline#extensions#tagbar#flags = 'f'
 " Themes
 colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 
-" Telescope
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files({hidden = true})<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>fk <cmd>lua require('telescope.builtin').keymaps()<cr>
-nnoremap <leader>fp <cmd>lua require('telescope').extensions.projects.projects{}<cr>
-
 " Fugitive / Git
 " Git blame current line / file
 nnoremap <leader>gb :Git blame<cr>
