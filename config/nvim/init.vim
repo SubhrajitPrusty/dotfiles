@@ -32,6 +32,8 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'                " Snippet engine
 Plug 'saadparwaiz1/cmp_luasnip'
 
+Plug 'mfussenegger/nvim-dap'
+
 " Python extras
 Plug 'mfussenegger/nvim-dap-python'   " Optional: Debugger
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -49,6 +51,7 @@ Plug 'HakonHarnes/img-clip.nvim'
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'NeogitOrg/neogit'
 Plug 'sindrets/diffview.nvim'
@@ -68,6 +71,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'zbirenbaum/copilot.lua'
 Plug 'ray-x/guihua.lua'
+Plug 'ahmedkhalf/project.nvim'
+
+" Misc
+Plug 'epwalsh/obsidian.nvim'
 
 " Conflicting
 " Plug 'ray-x/navigator.lua'       " LSP + navigation
@@ -109,6 +116,9 @@ if !&sidescrolloff
     set sidescrolloff=5   " Show next 5 columns while side-scrolling.
 endif
 set nostartofline       " Do not jump to first character with page commands.
+
+" conceallevel
+set conceallevel=1
 
 " Tell Vim which characters to show for expanded TABs,
 " trailing whitespace, and end-of-lines. VERY useful!
@@ -254,6 +264,7 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fk <cmd>lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>fp <cmd>lua require('telescope').extensions.projects.projects{}<cr>
 
 " Fugitive / Git
 " Git blame current line / file
@@ -270,7 +281,7 @@ nnoremap <leader>n :NERDTreeToggle %<cr>
 
 " Buffers
 " Close current buffer
-nnoremap <A-d> :bdelete!<cr>
+nnoremap <M-d> :bdelete!<cr>
 
 
 " autosave buffers
@@ -289,7 +300,7 @@ nnoremap <C-H> :History<cr>
 
 " Uses $HOME/bin/git-browse command
 " Will xdg-open the url
-command! -range Gbrowse execute 'silent ! git browse ' . expand('%') . ' ' . <line1> . ' ' . <line2> | checktime | redraw!
+" command! -range Gbrowse execute 'silent ! git browse ' . expand('%') . ' ' . <line1> . ' ' . <line2> | checktime | redraw!
 
 " command! -range Gbrowse execute 'silent ! git browse ' . system('git ls-files --full-name ' . shellescape(expand('%'))) . ' ' . <line1> . ' ' . <line2> | checktime | redraw!
 

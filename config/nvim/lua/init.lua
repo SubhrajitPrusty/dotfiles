@@ -22,6 +22,18 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 vim.keymap.set('n', '<space>ff', function() vim.lsp.buf.format { async = true } end, opts)
 
+-- for auto-session issues
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+
+-- cursor in last position
+vim.api.nvim_create_autocmd({'BufWinEnter'}, {
+  desc = 'return cursor to where it was last time closing the file',
+  pattern = '*',
+  command = 'silent! normal! g`"zv',
+})
+
+
 -- Mason + LSP
 local lspconfig = require("lspconfig")
 
@@ -53,7 +65,7 @@ cmp.setup({
 })
 
 -- Treesitter
-require("nvim-treesitter.configs").setup({
+require("nvim-treesitter").setup({
     ensure_installed = { "go", "python", "lua" },
     highlight = { enable = true },
 })
@@ -68,15 +80,18 @@ require("Comment").setup()
 require("which-key").setup()
 
 require("auto-session").setup {
-    use_git_branch = true,
+    git_use_branch_name = true,
     log_level = "error",
-    auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-    pre_save_cmds = { 'tabdo windo set foldmethod=manual | normal! zE' },
-    post_restore_cmds = { 'tabdo windo if &ft != "" | exe "setlocal foldmethod=" . getbufvar(bufnr(), "&fdm", "syntax") | endif', 'tabdo windo normal! zx' },
+    post_restore_cmds = { 'tabdo windo if &ft != "" | exe "setlocal foldmethod=" . getbufvar(bufnr(), "&fdm", "syntax") | endif', "tabdo windo normal! zx" },
+    pre_save_cmds = { "tabdo windo set foldmethod=manual | normal! zE" },
+    suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+    lazy = true,
 }
+
 
 -- telescope
 require('telescope').setup {
+    lazy = true,
     pickers = {
         find_files = {
             find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
@@ -84,25 +99,24 @@ require('telescope').setup {
     }
 }
 
-require("auto-session").setup {
-    use_git_branch = true,
-    log_level = "error",
-    auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-    pre_save_cmds = { 'tabdo windo set foldmethod=manual | normal! zE' },
-    post_restore_cmds = { 'tabdo windo if &ft != "" | exe "setlocal foldmethod=" . getbufvar(bufnr(), "&fdm", "syntax") | endif', 'tabdo windo normal! zx' },
-}
-
 require('avante_lib').load()
 require('avante').setup({
-    provider = "openai",
-    mode = "legacy",
+    provider = "copilot",
+    -- mode = "legacy",
     -- auto_suggestions_provider = "openai",
     behaviour = {
         auto_suggestions = false,
-    }
+    },
+    lazy = true,
 })
 
-require("supermaven-nvim").setup({})
+require("copilot").setup({
+    lazy = true,
+})
+
+require("supermaven-nvim").setup({
+    disable = true
+})
 
 -- NeoGit
 require('neogit').setup {
@@ -123,6 +137,105 @@ require('dashboard').setup {
     theme = 'hyper'
 
 }
+
+require("project_nvim").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+}
+
+require('telescope').load_extension('projects')
+
+-- DAP config
+local dap = require('dap')
+
+-- Adapter: debugpy
+dap.adapters.python = {
+  type = 'executable',
+  command = '/usr/bin/env',
+  args = { 'python', '-m', 'debugpy.adapter' },
+}
+
+
+-- Configurations: two options. Use one, remove the other.
+dap.configurations.python = {
+  -- Runs `python -m uvicorn server:app ...`
+  {
+    type = 'python',
+    request = 'launch',
+    name = 'Uvicorn (no-reload) - server:app',
+    module = 'uvicorn',
+    args = { 'server:app', '--host', '0.0.0.0', '--port', '5001' },
+    cwd = vim.fn.getcwd(),
+    console = 'integratedTerminal',
+    pythonPath = function()
+      local venv = os.getenv('VIRTUAL_ENV') or os.getenv('CONDA_PREFIX')
+      if venv then return venv .. '/bin/python' end
+      return '/usr/bin/python'
+    end
+  },
+}
+
+local dap = require('dap')
+local dapui = pcall(require, 'dapui') and require('dapui') or nil
+local widgets_ok, widgets = pcall(require, 'dap.ui.widgets')
+
+-- Signs (optional)
+vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'Error', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '▶', texthl = 'WarningMsg', linehl = '', numhl = '' })
+
+-- DAP Core controls
+vim.api.nvim_set_keymap('n', '<F5>', "<Cmd>lua require'dap'.continue()<CR>", opts)       -- start / continue
+vim.api.nvim_set_keymap('n', '<F10>', "<Cmd>lua require'dap'.step_over()<CR>", opts)     -- step over
+vim.api.nvim_set_keymap('n', '<F11>', "<Cmd>lua require'dap'.step_into()<CR>", opts)     -- step into
+vim.api.nvim_set_keymap('n', '<F12>', "<Cmd>lua require'dap'.step_out()<CR>", opts)      -- step out}
+
+-- Breakpoints
+vim.api.nvim_set_keymap('n', '<Leader>db', "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>dB', "<Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Condition: '))<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>dp', "<Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log message: '))<CR>", opts)
+
+-- Run / stop / detach
+vim.api.nvim_set_keymap('n', '<Leader>dl', "<Cmd>lua require'dap'.run_last()<CR>", opts)            -- run last config
+vim.api.nvim_set_keymap('n', '<Leader>dq', "<Cmd>lua require'dap'.terminate(); require'dap'.disconnect()<CR>", opts) -- stop and detach
+
+-- REPL / eval / run-to-cursor
+vim.api.nvim_set_keymap('n', '<Leader>dr', "<Cmd>lua require'dap'.repl.open()<CR>", opts)
+vim.api.nvim_set_keymap('v', '<Leader>de', "<Cmd>lua require'dap'.eval(require('vim.fn').getline('.'))<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>dc', "<Cmd>lua require'dap'.run_to_cursor()<CR>", opts)
+
+-- UI widgets (if available)
+if widgets_ok then
+  vim.api.nvim_set_keymap('n', '<Leader>dh', "<Cmd>lua require('dap.ui.widgets').hover()<CR>", opts)
+  vim.api.nvim_set_keymap('n', '<Leader>df', "<Cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').frames)<CR>", opts)
+  vim.api.nvim_set_keymap('n', '<Leader>ds', "<Cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)<CR>", opts)
+end
+
+-- Optional: automatically open/close dapui if installed
+if dapui then
+  dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+  dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+  dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+end
+
+-- obsidian
+require('obsidian').setup {
+    workspaces = {
+        {
+            name = 'work',
+            path = os.getenv('HOME') .. '/Documents/work',
+        }
+    },
+    daily_notes = {
+        folder = 'daily',
+        date_format = "%Y-%m-%d",
+        template = nil,
+    },
+    ui = {
+        enable = true,
+    }
+}
+
 
 -- NOTE: Disabled because it conflicts with Mason
 -- require('navigator').setup({
@@ -150,13 +263,6 @@ require('dashboard').setup {
 -- -- 	on_attach = on_attach,
 -- -- }
 --
--- -- ruff is python language server + linter
--- lspconfig.ruff.setup {
---     on_attach = on_attach,
---     filetypes = { 'python' },
---     cmd = { "ruff", "server" },
---     settings = {},
--- }
 --
 --
 -- lspconfig.jedi_language_server.setup{
