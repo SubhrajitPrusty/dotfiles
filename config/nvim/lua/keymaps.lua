@@ -6,6 +6,15 @@ function M.setup()
 
 	local telescope_builtin = require("telescope.builtin")
 	local telescope_ext_projects = require("telescope").extensions.projects
+	local telescope_emoji = require("telescope").extensions.emoji
+
+	-- emoji
+	vim.keymap.set(
+		"n",
+		"<leader>se",
+		telescope_emoji.emoji,
+		vim.tbl_extend("force", opts, { desc = "Telescope: Emoji" })
+	)
 
 	vim.keymap.set(
 		"n",

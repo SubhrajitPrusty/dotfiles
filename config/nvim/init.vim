@@ -69,6 +69,7 @@ Plug 'ahmedkhalf/project.nvim'
 
 " Misc
 Plug 'epwalsh/obsidian.nvim'
+Plug 'allaman/emoji.nvim'
 
 " Conflicting
 " Plug 'ray-x/navigator.lua'       " LSP + navigation

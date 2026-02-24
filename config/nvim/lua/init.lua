@@ -25,6 +25,7 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "path" },
 		{ name = "luasnip" },
+		{ name = "emoji" },
 	},
 })
 
@@ -87,7 +88,7 @@ require("supermaven-nvim").setup({
 
 -- NeoGit
 require("neogit").setup({
-	kind = "floating"
+	kind = "floating",
 	-- kind = "replace",
 })
 
@@ -101,8 +102,14 @@ require("project_nvim").setup({
 	-- refer to the configuration section below
 })
 
+require("emoji").setup({
+	enable_cmp_integration = true,
+	plugin_path = vim.fn.expand("$HOME/.vim/plugged/"),
+})
+
 local telescope = require("telescope")
 telescope.load_extension("projects")
+telescope.load_extension("emoji")
 
 -- telescope
 telescope.setup({
