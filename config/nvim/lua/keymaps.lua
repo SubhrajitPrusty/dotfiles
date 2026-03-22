@@ -219,14 +219,37 @@ function M.setup()
 	)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "LSP: Code action" }))
 
+	-- generic format
 	vim.keymap.set("n", "<space>ff", function()
 		vim.lsp.buf.format({ async = true })
 	end, vim.tbl_extend("force", opts, { desc = "LSP: Format" }))
 
-	-- add obsidian shortcuts
-	vim.keymap.set("n", "<leader>ot", ":ObsidianToday<CR>")
-	vim.keymap.set("n", "<leader>os", ":ObsidianSearch<CR>")
-	vim.keymap.set("n", "<leader>od", ":ObsidianDailies<CR>")
+	-- add obsidian shortcuts nvim
+	vim.keymap.set("n", "<leader>ot", ":ObsidianToday<CR>", vim.tbl_extend("force", opts, { desc = "Obsidian: Today" }))
+	vim.keymap.set(
+		"n",
+		"<leader>oy",
+		":ObsidianYesterday<CR>",
+		vim.tbl_extend("force", opts, { desc = "Obsidian: Yesterday" })
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>os",
+		":ObsidianSearch<CR>",
+		vim.tbl_extend("force", opts, { desc = "Obsidian: Search" })
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>od",
+		":ObsidianDailies<CR>",
+		vim.tbl_extend("force", opts, { desc = "Obsidian: Dailies" })
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>oq",
+		":ObsidianQuickSwitch<CR>",
+		vim.tbl_extend("force", opts, { desc = "Obsidian: Quick Switch" })
+	)
 
 	-- dap config
 	local dap = require("dap")
@@ -355,6 +378,11 @@ function M.setup()
 	-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
+    -- Cloak
+    vim.keymap.set("n", "<leader>ct", ":CloakToggle<cr>", vim.tbl_extend("force", opts, { desc = "Cloak Toggle" }))
+    vim.keymap.set("n", "<leader>cl", ":CloakPreviewLine<cr>", vim.tbl_extend("force", opts, { desc = "Cloak Preview Line" }))
+
 end
 
 return M

@@ -40,7 +40,7 @@ Plug 'nvimdev/dashboard-nvim'
 Plug 'ray-x/guihua.lua'          " UI for go.nvim
 Plug 'stevearc/dressing.nvim'  " required by avante
 Plug 'MunifTanjim/nui.nvim'    " required by avante
-Plug 'MeanderingProgrammer/render-markdown.nvim' " required by avante
+" Plug 'MeanderingProgrammer/render-markdown.nvim' " required by avante
 Plug 'HakonHarnes/img-clip.nvim'
 
 " Git
@@ -70,6 +70,7 @@ Plug 'ahmedkhalf/project.nvim'
 " Misc
 Plug 'epwalsh/obsidian.nvim'
 Plug 'allaman/emoji.nvim'
+Plug 'laytan/cloak.nvim'
 
 " Conflicting
 " Plug 'ray-x/navigator.lua'       " LSP + navigation
@@ -203,6 +204,7 @@ let g:airline_theme = 'zenburn'
 let g:airline#extensions#tagbar#flags = 'f'
 let g:airline_section_y = ''
 let g:airline_section_z = '%p%% %l:%c'
+let g:airline#extensions#whitespace#enabled = 0
 
 " Themes
 colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
