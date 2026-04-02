@@ -42,6 +42,7 @@ Plug 'stevearc/dressing.nvim'  " required by avante
 Plug 'MunifTanjim/nui.nvim'    " required by avante
 " Plug 'MeanderingProgrammer/render-markdown.nvim' " required by avante
 Plug 'HakonHarnes/img-clip.nvim'
+Plug 'nvim-pack/nvim-spectre'
 
 " Git
 Plug 'tpope/vim-fugitive'

@@ -379,10 +379,55 @@ function M.setup()
 	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
-    -- Cloak
-    vim.keymap.set("n", "<leader>ct", ":CloakToggle<cr>", vim.tbl_extend("force", opts, { desc = "Cloak Toggle" }))
-    vim.keymap.set("n", "<leader>cl", ":CloakPreviewLine<cr>", vim.tbl_extend("force", opts, { desc = "Cloak Preview Line" }))
+	-- Cloak
+	vim.keymap.set("n", "<leader>ct", ":CloakToggle<cr>", vim.tbl_extend("force", opts, { desc = "Cloak Toggle" }))
+	vim.keymap.set(
+		"n",
+		"<leader>cl",
+		":CloakPreviewLine<cr>",
+		vim.tbl_extend("force", opts, { desc = "Cloak Preview Line" })
+	)
 
+	-- Spectre
+	vim.keymap.set(
+		"n",
+		"<leader>S",
+		'<cmd>lua require("spectre").toggle()<CR>',
+		vim.tbl_extend("force", opts, { desc = "Toggle Spectre" })
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>sw",
+		'<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
+		vim.tbl_extend("force", opts, { desc = "Search current word" })
+	)
+	vim.keymap.set(
+		"v",
+		"<leader>sw",
+		'<esc><cmd>lua require("spectre").open_visual()<CR>',
+		vim.tbl_extend("force", opts, { desc = "Search current word" })
+	)
+	vim.keymap.set(
+		"n",
+		"<leader>sp",
+		'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
+		vim.tbl_extend("force", opts, { desc = "Search on current file" })
+	)
+
+	-- Toggle between loguru and configure_logger for bolna project
+	vim.keymap.set("n", "<leader>tl", function()
+		local s = require("spectre")
+		local in_bolna = vim.fn.system("grep -rl 'configure_logger(__name__)' --include='*.py' .") ~= ""
+		local search_text, replace_text
+		if in_bolna then
+			search_text = "logger = configure_logger\\(__name__\\)"
+			replace_text = "from loguru import logger"
+		else
+			search_text = "from loguru import logger"
+			replace_text = "logger = configure_logger(__name__)"
+		end
+		s.open({ search_text = search_text, replace_text = replace_text, path = "**/*.py" })
+	end)
 end
 
 return M
